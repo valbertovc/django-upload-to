@@ -1,0 +1,42 @@
+default_language_version:
+  python: python3.9
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: end-of-file-fixer
+        exclude: "static"
+        types: [python]
+      - id: fix-encoding-pragma
+        args: ["--remove"]
+      - id: no-commit-to-branch
+      - id: trailing-whitespace
+        types: [python]
+      - id: debug-statements
+      - id: fix-byte-order-marker
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+        name: Code formating with Black
+        types: [python]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: Isort imports
+        types: [python]
+
+  - repo: https://github.com/pycqa/pylint
+    rev: v2.16.2
+    hooks:
+      - id: pylint
+        name: Check pylint issues
+        types: [python]
+        additional_dependencies: ['reportlab']
