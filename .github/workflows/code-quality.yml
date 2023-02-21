@@ -1,0 +1,24 @@
+name: check
+on:
+  pull_request:
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: "1.3"
+      - name: Install dependencies
+        run: |
+          pip install -U pip
+          pip install black isort
+      - name: Run black
+        run: black . --check
+      - name: Run isort
+        run: isort . --check-only

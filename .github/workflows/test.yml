@@ -16,9 +16,9 @@ jobs:
           - "3.8"
           - "3.7"
         os:
-          - ubuntu-22.04
-          - windows-2022
-          - macos-12
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
     steps:
       - name: Setup python
         uses: actions/setup-python@v4
@@ -56,6 +56,7 @@ jobs:
         run: |
           poetry install
           poetry run coverage run manage.py test
+          poetry run coverage report -m
           poetry run coverage report -m
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2
