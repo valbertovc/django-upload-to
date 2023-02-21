@@ -37,3 +37,22 @@ jobs:
         run: tox r -e py${{ matrix.py }} -vv --notest
       - name: Run test suite
         run: tox r -e py${{ matrix.py }} --skip-pkg-install
+
+  coverage:
+    name: Combine & check coverage.
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install coverage
+        run: pip install coverage[toml]
+      - name: Run test suite with coverage
+        run: coverage run manage.py test
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v2
