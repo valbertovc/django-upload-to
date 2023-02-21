@@ -49,7 +49,7 @@ jobs:
         run: tox
 
   coverage:
-    needs: code-quality,test
+    needs: test
     name: Check coverage.
     runs-on: ubuntu-latest
     steps:
