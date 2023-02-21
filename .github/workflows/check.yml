@@ -39,7 +39,7 @@ jobs:
         run: tox r -e py${{ matrix.py }} --skip-pkg-install
 
   coverage:
-    name: Combine & check coverage.
+    name: Check coverage.
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -51,8 +51,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install coverage
-        run: pip install coverage[toml]
+        run: pip install coverage[toml] poetry
       - name: Run test suite with coverage
-        run: coverage run manage.py test
+        run: |
+          poetry install
+          poetry run coverage run manage.py test
+          poetry run coverage report -m
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2
