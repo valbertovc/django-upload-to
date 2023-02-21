@@ -130,6 +130,7 @@ class AttrUploadTo(UploadTo):
         return dirname + self.get_attrs(instance)
 
 
+@deconstructible
 class ModelUploadTo(AttrUploadTo):
     """
     It generates a full path to upload files using Django FileField and

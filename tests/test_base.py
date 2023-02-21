@@ -10,7 +10,7 @@ User = get_user_model()
 
 
 class UUIDFileNameTestCase(TestCase):
-    @mock.patch("upload_to.base.uuid4")
+    @mock.patch("upload_to.uuid4")
     def test_should_replace_filename_by_uuid(self, uuid4):
         uuid4.return_value.hex = "abcd123"
         filename = base.uuid_filename("test.pdf")
@@ -102,13 +102,13 @@ class UploadToClassTestCase(TestCase):
 
 
 class UuidUploadToTestCase(TestCase):
-    @mock.patch("upload_to.base.uuid4")
+    @mock.patch("upload_to.uuid4")
     def test_get_filename_should_generates_a_new_uuid_name(self, uuid4):
         uuid4.return_value.hex = "abcd123"
         generator = base.UuidUploadTo()
         self.assertIn("abcd123.pdf", generator.get_filename("test.pdf"))
 
-    @mock.patch("upload_to.base.uuid4")
+    @mock.patch("upload_to.uuid4")
     def test_calling_should_generate_a_new_full_path_with_uuid_as_file_name(
         self, uuid4
     ):
