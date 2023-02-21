@@ -33,7 +33,7 @@ Django = "^3.2.0"
 pre-commit = "^2.15.0"
 pytest = "^6.2.5"
 tox = "^4.4.5"
-coverage = "^7.1.0"
+coverage = {extras = ["toml"], version = "^7.1.0"}
 
 [tool.pylint."MESSAGES CONTROL"]
 disable = [
@@ -42,3 +42,14 @@ disable = [
     "missing-function-docstring",
     "import-error",
 ]
+
+[tool.coverage.paths]
+source = ["upload_to"]
+
+[tool.coverage.run]
+branch = true
+source = ["upload_to"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100

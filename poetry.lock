@@ -157,6 +157,9 @@ files = [
     {file = "coverage-7.1.0.tar.gz", hash = "sha256:10188fe543560ec4874f974b5305cd1a8bdcfa885ee00ea3a03733464c4ca265"},
 ]
 
+[package.dependencies]
+tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.11.0a6\" and extra == \"toml\""}
+
 [package.extras]
 toml = ["tomli"]
 
@@ -591,4 +594,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7.0"
-content-hash = "754a1f68924e41f2ab0ee068428fe46b3636916eb8d4cb6a189e9dfe9e5e3a91"
+content-hash = "7678e44b01e8651fa2568a7f51aa8620f22c96d82fd0e34154c946ddcc6f4786"
