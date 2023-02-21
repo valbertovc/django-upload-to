@@ -4,6 +4,7 @@ on:
 
 jobs:
   code-quality:
+    name: Code quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -11,14 +12,11 @@ jobs:
         with:
           python-version: "3.11"
           cache: 'pip'
-      - name: Install dependencies
-        run: |
+      - run: |
           pip install -U pip
           pip install black isort
-      - name: Check code layout
-        run: black . --check
-      - name: Check imports
-        run: isort . --check-only
+      - run: black . --check
+      - run: isort . --check-only
   test:
     needs: code-quality
     name: test ${{ matrix.py }} on ${{ matrix.os }}
@@ -34,39 +32,34 @@ jobs:
           - windows-latest
           - macos-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Setup python for test ${{ matrix.py }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.py }}
           cache: 'pip'
-      - name: Setup dependencies
-        run: |
+      - run: |
           pip install -U pip
           pip install tox
-      - name: Run test suite
-        run: tox
+      - run: tox
 
   coverage:
     needs: test
-    name: Check coverage.
+    name: Check coverage
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Setup python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Install coverage
-        run: pip install coverage[toml] poetry
+      - run: pip install coverage[toml]
       - name: Run test suite with coverage
         run: |
-          poetry install
-          poetry run coverage run manage.py test
-          poetry run coverage report -m
-          poetry run coverage report -m
+          pip install -U pip
+          pip install Django coverage
+          coverage run manage.py test
+          coverage report
+          coverage xml
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2
