@@ -58,7 +58,6 @@ classifiers=[
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python",
@@ -72,8 +71,8 @@ keywords=["django", "file", "media", "upload"]
 "Homepage" = "https://github.com/valbertovc/django-upload-to"
 
 [tool.poetry.dependencies]
-python = "^3.7.0"
-Django = "^2.2.0"
+python = "^3.8.0"
+Django = ">=2.2.0,>=3.0.0,>=4.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^2.15.0"
