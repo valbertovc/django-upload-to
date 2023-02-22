@@ -1,3 +1,4 @@
+import os
 from unittest import mock
 
 from django.contrib.auth import get_user_model
@@ -10,7 +11,7 @@ User = get_user_model()
 
 
 class UUIDFileNameTestCase(TestCase):
-    @mock.patch("upload_to.base.uuid4")
+    @mock.patch("upload_to.uuid4")
     def test_should_replace_filename_by_uuid(self, uuid4):
         uuid4.return_value.hex = "abcd123"
         filename = base.uuid_filename("test.pdf")
@@ -24,12 +25,14 @@ class UUIDFileNameTestCase(TestCase):
 class UploadToTestCase(TestCase):
     def test_should_join_path_with_file_name(self):
         upload_path = base.upload_to(["a", "b"], "test.pdf")
-        self.assertIn("a/b/test.pdf", upload_path)
+        expected = os.path.join("a", "b", "test.pdf")
+        self.assertIn(expected, upload_path)
 
     def test_should_replace_timestamp_by_timezone_now_values(self):
         upload_path = base.upload_to(["a", "%Y"], "test.pdf")
         current_year = timezone.now().year
-        self.assertIn(f"a/{current_year}/test.pdf", upload_path)
+        expected = os.path.join("a", str(current_year), "test.pdf")
+        self.assertIn(expected, upload_path)
 
 
 class NormalizeFileNameTestCase(TestCase):
@@ -81,13 +84,15 @@ class UploadToClassTestCase(TestCase):
         generator = base.UploadTo("folder/subfolder")
         instance = mock.Mock()
         filename = "test.pdf"
-        self.assertEqual("folder/subfolder/test.pdf", generator(instance, filename))
+        expected = os.path.join("folder", "subfolder", filename)
+        self.assertEqual(expected, generator(instance, filename))
 
     def test_calling_with_list_prefix_should_generate_a_full_file_name(self):
         generator = base.UploadTo(["folder", "subfolder"])
         instance = mock.Mock()
         filename = "test.pdf"
-        self.assertEqual("folder/subfolder/test.pdf", generator(instance, filename))
+        expected = os.path.join("folder", "subfolder", filename)
+        self.assertEqual(expected, generator(instance, filename))
 
     def test_calling_with_strftime_format_should_generate_a_full_file_name_from_timezone(
         self,
@@ -96,19 +101,18 @@ class UploadToClassTestCase(TestCase):
         instance = mock.Mock()
         filename = "test.pdf"
         current_year = timezone.now().year
-        self.assertEqual(
-            f"folder/{current_year}/test.pdf", generator(instance, filename)
-        )
+        expected = os.path.join("folder", str(current_year), filename)
+        self.assertEqual(expected, generator(instance, filename))
 
 
 class UuidUploadToTestCase(TestCase):
-    @mock.patch("upload_to.base.uuid4")
+    @mock.patch("upload_to.uuid4")
     def test_get_filename_should_generates_a_new_uuid_name(self, uuid4):
         uuid4.return_value.hex = "abcd123"
         generator = base.UuidUploadTo()
         self.assertIn("abcd123.pdf", generator.get_filename("test.pdf"))
 
-    @mock.patch("upload_to.base.uuid4")
+    @mock.patch("upload_to.uuid4")
     def test_calling_should_generate_a_new_full_path_with_uuid_as_file_name(
         self, uuid4
     ):
@@ -116,7 +120,8 @@ class UuidUploadToTestCase(TestCase):
         generator = base.UuidUploadTo("a_folder")
         instance = mock.Mock()
         filename = "test.pdf"
-        self.assertIn("a_folder/abcd123.pdf", generator(instance, filename))
+        expected = os.path.join("a_folder", "abcd123.pdf")
+        self.assertIn(expected, generator(instance, filename))
 
 
 class AttrUploadToTestCase(TestCase):
@@ -134,7 +139,8 @@ class AttrUploadToTestCase(TestCase):
         generator = base.AttrUploadTo(prefix="a/b", attrs=["username", "first_name"])
         instance = User(username="test", first_name="other")
         filename = "test.pdf"
-        self.assertEqual("a/b/test/other/test.pdf", generator(instance, filename))
+        expected = os.path.join("a", "b", "test", "other", "test.pdf")
+        self.assertEqual(expected, generator(instance, filename))
 
 
 class ModelUploadToTestCase(TestCase):
@@ -165,9 +171,12 @@ class ModelUploadToTestCase(TestCase):
         )
         instance = User(username="user_name_test", first_name="first_name_test")
         filename = "test.pdf"
-        folder = (
-            f"prefixfolder/"
-            f"{instance._meta.app_label}/{instance._meta.model_name}/"  # pylint: disable=protected-access
-            "user_name_test/first_name_test/test.pdf"
+        expected = os.path.join(
+            "prefixfolder",
+            instance._meta.app_label,  # pylint: disable=protected-access
+            instance._meta.model_name,  # pylint: disable=protected-access
+            "user_name_test",
+            "first_name_test",
+            "test.pdf",
         )
-        self.assertEqual(folder, generator(instance, filename))
+        self.assertEqual(expected, generator(instance, filename))

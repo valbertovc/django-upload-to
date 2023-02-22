@@ -2,51 +2,83 @@
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.tox]
-legacy_tox_ini = """
-[tox]
-isolated_build = true
-envlist = py36,py37,py38,py39,py310,py311
-[testenv]
-require_locked_deps = true
-install_dev_deps = true
-whitelist_externals = poetry
-commands =
-    poetry install
-    poetry run pytest
-"""
-
-[tool.poetry]
-name = "django-upload-to"
+[project]
+name = "upload_to"
 version = "0.1.0"
+authors = [
+  { name="Valberto Carneiro", email="valbertovc@gmail.com" },
+]
 description = "It generates dynamically a directory path and a file name for Django FileField"
-authors = ["Valberto <valbertovc@gmail.com>"]
 readme = "README.md"
-repository = "https://github.com/valbertovc/django-upload-to"
-classifiers=[
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Django :: 2",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4",
+    "Framework :: Django :: 4.1",
     "Intended Audience :: Developers",
-    "Programming Language :: Python",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python",
+    "Topic :: Multimedia",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/pypa/sampleproject"
+"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+
+[tool.poetry]
+name = "upload_to"
+version = "0.1.0"
+description = "It generates dynamically a directory path and a file name for Django FileField"
+authors = ["Valberto Carneiro <valbertovc@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/valbertovc/django-upload-to"
+classifiers=[
+    "Development Status :: 4 - Beta",
+    "Framework :: Django :: 2",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4",
+    "Framework :: Django :: 4.1",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python",
     "Topic :: Multimedia",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
 ]
 keywords=["django", "file", "media", "upload"]
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/valbertovc/django-upload-to/issues"
+"Homepage" = "https://github.com/valbertovc/django-upload-to"
 
 [tool.poetry.dependencies]
 python = "^3.7.0"
-Django = "^3.2.0"
+Django = "^2.2.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pre-commit = "^2.15.0"
-pytest = "^6.2.5"
-tox = "^3.24.4"
+tox = "^4.4.5"
+coverage = {extras = ["toml"], version = "^7.1.0"}
 
 [tool.pylint."MESSAGES CONTROL"]
 disable = [
@@ -55,3 +87,14 @@ disable = [
     "missing-function-docstring",
     "import-error",
 ]
+
+[tool.coverage.paths]
+source = ["upload_to"]
+
+[tool.coverage.run]
+branch = true
+source = ["upload_to"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
