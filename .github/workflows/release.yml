@@ -10,7 +10,9 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v2
         with:
           python-version: "3.11"
@@ -18,16 +20,9 @@ jobs:
         uses: abatilo/actions-poetry@v2.0.0
         with:
           poetry-version: "1.3"
-      - name: Test publish
+      - name: Publish
         env:
-          PYPI_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          poetry config repositories.test-pypi https://test.pypi.org/legacy/
-          poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
-          poetry publish --build --repository test-pypi
-#      - name: Publish
-#        env:
-#          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-#        run: |
-#          poetry config pypi-token.pypi $PYPI_TOKEN
-#          poetry publish --build
+          poetry config pypi-token.pypi $PYPI_TOKEN
+          poetry publish --build

@@ -9,6 +9,8 @@ from django.utils import timezone
 from django.utils.deconstruct import deconstructible
 from django.utils.text import slugify
 
+__version__ = "0.1.1"
+
 __all__ = [
     "uuid_filename",
     "upload_to",
