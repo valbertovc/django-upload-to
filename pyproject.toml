@@ -33,6 +33,9 @@ keywords=["django", "file", "media", "upload"]
 packages = [
     { include = "upload_to" }
 ]
+include = [
+"LICENSE",
+]
 
 [tool.poetry.urls]
 "Homepage" = "https://github.com/valbertovc/django-upload-to"
