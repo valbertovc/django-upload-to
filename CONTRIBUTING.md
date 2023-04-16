@@ -1,4 +1,4 @@
-# Contributing to the Django-Upload-To project
+# Contributing to the django-upload-to project
 
 Thank you for your interest in contributing to the django-upload-to project! Here are some guidelines to help you get started.
 
@@ -20,7 +20,7 @@ To set up a local development environment, follow the instructions below:
 ```bash
 git clone https://github.com/<your-account>/django-upload-to.git
 ```
-3. Install the Poetry package manager by following the instructions in the official documentation.
+3. Install the [Poetry package manager](https://python-poetry.org/docs/#installation) by following the instructions in the official documentation.
 4. Install the project dependencies using Poetry:
 ```bash
 cd django-upload-to
@@ -33,7 +33,7 @@ python manage.py test
 
 ## Code Standards
 
-The Django-Upload-To project follows the Python code style requirements of PEP 8. Please make sure to follow these standards when contributing to the project.
+The django-upload-to project follows the Python code style requirements of PEP 8. Please make sure to follow these standards when contributing to the project.
 
 To ensure that your code meets the PEP 8 code standards, the project uses pre-commit. [Pre-commit](https://pre-commit.com/) is a tool that runs automated checks on your code before allowing you to make a commit. This helps to catch style issues before the code is reviewed.
 
@@ -100,4 +100,4 @@ When submitting a pull request, please ensure that it meets the following guidel
 
 If you encounter any issues or have any suggestions for the project, please create an issue in the [issue tracker](https://github.com/valbertovc/django-upload-to/issues).
 
-Thank you again for contributing to the Django-Upload-To project!
+Thank you again for contributing to the django-upload-to project!
