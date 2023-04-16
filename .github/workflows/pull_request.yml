@@ -1,10 +1,9 @@
-name: check
+name: Check code
 on:
   pull_request:
 
 jobs:
   code-quality:
-    name: Code quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,6 +15,7 @@ jobs:
           pip install black isort
       - run: black . --check
       - run: isort . --check-only
+
   test:
     needs: code-quality
     name: test ${{ matrix.py }} on ${{ matrix.os }}
@@ -41,6 +41,26 @@ jobs:
           pip install -U pip
           pip install tox
       - run: tox
+
+  test-pypi:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Build
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: "1.3"
+      - name: Test publish
+        env:
+          TEST_PYPI_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
+        run: |
+          poetry config repositories.test-pypi https://test.pypi.org/legacy/
+          poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
+          poetry publish --build --dry-run --repository test-pypi
 
   coverage:
     needs: test
