@@ -36,7 +36,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.py }}
-          cache: 'pip'
       - run: |
           pip install -U pip
           pip install tox
@@ -71,7 +70,6 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v4
         with:
-          cache: 'pip'
           python-version: "3.11"
       - run: pip install coverage[toml]
       - name: Run test suite with coverage
