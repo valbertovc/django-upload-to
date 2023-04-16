@@ -27,5 +27,5 @@ jobs:
           poetry publish --build
       - name: Publish docs
         run: |
-          poetry add mkdocs mkdocs-material
+          poetry install
           mkdocs gh-deploy --force
