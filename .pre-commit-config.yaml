@@ -20,7 +20,7 @@ repos:
       - id: detect-private-key
 
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 23.3.0
     hooks:
       - id: black
         name: Code formating with Black
@@ -34,9 +34,9 @@ repos:
         types: [python]
 
   - repo: https://github.com/pycqa/pylint
-    rev: v2.16.2
+    rev: v3.0.0a6
     hooks:
       - id: pylint
         name: Check pylint issues
         types: [python]
-        additional_dependencies: ['reportlab']
+        additional_dependencies: ["Django"]

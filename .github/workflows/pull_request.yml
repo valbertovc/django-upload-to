@@ -59,7 +59,7 @@ jobs:
         run: |
           poetry config repositories.test-pypi https://test.pypi.org/legacy/
           poetry config pypi-token.test-pypi $TEST_PYPI_TOKEN
-          poetry publish --build --repository test-pypi
+          poetry publish --build --dry-run --repository test-pypi
 
   coverage:
     needs: test
