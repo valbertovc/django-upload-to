@@ -26,4 +26,6 @@ jobs:
           poetry config pypi-token.pypi $PYPI_TOKEN
           poetry publish --build
       - name: Publish docs
-        run: mkdocs gh-deploy --force
+        run: |
+          poetry add mkdocs mkdocs-material
+          mkdocs gh-deploy --force
