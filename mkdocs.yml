@@ -1,10 +1,16 @@
-site_name: django-upload-to docs
+site_name: django-upload-to
 
 theme:
-  name: "material"
+    name: readthedocs
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - rust
+        - python
+        - bash
 
 nav:
-  - index.md
+  - django-upload-to: index.md
   - tutorials.md
   - How-To Guides: how-to-guides.md
   - reference.md
