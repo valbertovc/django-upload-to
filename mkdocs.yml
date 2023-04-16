@@ -1,0 +1,11 @@
+site_name: django-upload-to docs
+
+theme:
+  name: "material"
+
+nav:
+  - index.md
+  - tutorials.md
+  - How-To Guides: how-to-guides.md
+  - reference.md
+  - explanation.md
