@@ -102,3 +102,9 @@ class MyProfile(models.Model):
     user = models.OneToOneField(...)
     avatar = models.FileField(upload_to=my_upload_generator)
 ```
+
+## Useful links
+
+1. [Documentation](https://valbertovc.github.io/django-upload-to/)
+2. [Changelog](https://github.com/valbertovc/django-upload-to/releases)
+3. [PyPi Page](https://pypi.org/project/django-upload-to/)
