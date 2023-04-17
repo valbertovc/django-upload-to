@@ -25,5 +25,13 @@ jobs:
         run: |
           poetry config pypi-token.pypi $PYPI_TOKEN
           poetry publish --build
-      - name: Publish docs
-        run: mkdocs gh-deploy --force
+  docs:
+    runs-on: ubuntu-latest
+    name: Publish the docs
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - run: pip install mkdocs
+      - run: mkdocs gh-deploy --force

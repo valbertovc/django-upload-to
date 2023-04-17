@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "django-upload-to"
-version = "0.3.0"
+version = "0.3.3"
 description = "It generates dynamically a directory path and a file name for Django FileField"
 authors = ["Valberto Carneiro <valbertovc@gmail.com>"]
 readme = "README.md"
@@ -39,7 +39,6 @@ include = [
 
 [tool.poetry.urls]
 "Homepage" = "https://valbertovc.github.io/django-upload-to/"
-"Source" = "https://github.com/valbertovc/django-upload-to"
 "Bug Tracker" = "https://github.com/valbertovc/django-upload-to/issues"
 "Changelog" = "https://github.com/valbertovc/django-upload-to/releases"
 
