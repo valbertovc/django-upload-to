@@ -1,6 +1,11 @@
 # Welcome to django-upload-to documentation
 
-[![codecov](https://codecov.io/github/valbertovc/django-upload-to/branch/main/graph/badge.svg?token=2R5S5GTS0X)](https://codecov.io/github/valbertovc/django-upload-to)
+![PyPI - License](https://img.shields.io/pypi/l/django-upload-to)
+![Pypi Version](https://img.shields.io/pypi/v/django-upload-to.svg)
+[![Codecov](https://codecov.io/github/valbertovc/django-upload-to/branch/main/graph/badge.svg?token=2R5S5GTS0X)](https://codecov.io/github/valbertovc/django-upload-to)
+![Building](https://img.shields.io/github/actions/workflow/status/valbertovc/django-upload-to/release.yml)
+![Python Versions](https://img.shields.io/pypi/pyversions/django-upload-to.svg)
+![Django Versions](https://img.shields.io/pypi/frameworkversions/django/django-upload-to)
 
 This site contains the project documentation for the
 `django-upload-to` project that is a django reusable app used in the
