@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>django-upload-to</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "django-upload-to";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> django-upload-to
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">django-upload-to</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of contents</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="how-to-guides/">How-To Guides</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">django-upload-to</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">django-upload-to</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="welcome-to-django-upload-to-documentation">Welcome to django-upload-to documentation</h1>
+<p><img alt="PyPI - License" src="https://img.shields.io/pypi/l/django-upload-to" />
+<img alt="Pypi Version" src="https://img.shields.io/pypi/v/django-upload-to.svg" />
+<a href="https://codecov.io/github/valbertovc/django-upload-to"><img alt="Codecov" src="https://codecov.io/github/valbertovc/django-upload-to/branch/main/graph/badge.svg?token=2R5S5GTS0X" /></a>
+<img alt="Building" src="https://img.shields.io/github/actions/workflow/status/valbertovc/django-upload-to/release.yml" />
+<img alt="Python Versions" src="https://img.shields.io/pypi/pyversions/django-upload-to.svg" />
+<img alt="Django Versions" src="https://img.shields.io/pypi/frameworkversions/django/django-upload-to" /></p>
+<p>This site contains the project documentation for the
+<code>django-upload-to</code> project that is a django reusable app used in the
+Django projects.</p>
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+<li><a href="how-to-guides/">How-To Guides</a></li>
+</ol>
+<h1 id="introduction">Introduction</h1>
+<p>It generates dynamically a directory path and a secure file name for Django's <code>FileField</code>.</p>
+<p>Main options:</p>
+<ul>
+<li>Ready to use generators.</li>
+<li>Generate secure file name without especial characters.</li>
+<li>Generate file name using a uuid value.</li>
+<li>Dynamically generate paths from the model instance.</li>
+<li>Generate paths using Python datetime formats.</li>
+</ul>
+<h2 id="get-started">Get started</h2>
+<p>Install the django-upload-to in your virtual environment:</p>
+<pre><code class="language-bash">$ pip install django-upload-to
+</code></pre>
+<p>Import it in your models file and add it as a <code>upload_to</code> argument in the <code>FileField</code> </p>
+<pre><code class="language-python"># my_app/models.py
+from upload_to import UploadTo
+from django.db import models
+
+
+class MyModel(models.Model):
+    attachment = models.FileField(upload_to=UploadTo(&quot;attachments&quot;))
+</code></pre>
+<p>The path and file name generated will be like this:</p>
+<pre><code class="language-text">&quot;attachments/the-file-name-uploaded.pdf&quot;
+</code></pre>
+<h2 id="useful-links">Useful links</h2>
+<ol>
+<li><a href="https://valbertovc.github.io/django-upload-to/">Documentation</a></li>
+<li><a href="https://github.com/valbertovc/django-upload-to/releases">Changelog</a></li>
+<li><a href="https://pypi.org/project/django-upload-to/">PyPi Page</a></li>
+<li><a href="https://github.com/valbertovc/django-upload-to">Repository</a></li>
+<li><a href="https://github.com/valbertovc/django-upload-to/issues">Bug Tracker</a></li>
+</ol>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="how-to-guides/" class="btn btn-neutral float-right" title="How-To Guides">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+      <span><a href="how-to-guides/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2025-09-05 13:04:04.179216+00:00
+-->

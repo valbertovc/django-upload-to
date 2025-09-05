@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>How-To Guides - django-upload-to</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "How-To Guides";
+        var mkdocs_page_input_path = "how-to-guides.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> django-upload-to
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">django-upload-to</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">How-To Guides</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#ready-to-use-classes">Ready-to-use classes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#folder-name">Folder name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#file-name">File name</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#function-generator">Function generator</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#file-size-validation">File size validation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#limiting-maximum-file-size">Limiting maximum file size</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setting-minimum-file-size">Setting minimum file size</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#combining-size-validators">Combining size validators</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#using-callable-limit-values">Using callable limit values</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#size-unit-constants">Size unit constants</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">django-upload-to</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">How-To Guides</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="how-to-guides">How-to guides</h1>
+<p>This part of the project documentation focuses on a
+<strong>problem-oriented</strong> approach. You'll tackle common
+tasks that you might have, with the help of the code
+provided in this project.</p>
+<h2 id="ready-to-use-classes">Ready-to-use classes</h2>
+<p>Consider the scenario below:</p>
+<pre><code class="language-python">import upload_to
+from django.db import models
+
+
+class MyUser(models.Model):
+    username = models.CharField(...)
+    avatar = models.FileField(upload_to=&lt;generator&gt;)
+
+instance = MyUser(username='user@email.com')
+</code></pre>
+<p>Replace the <code>&lt;generator&gt;</code> fragment by the generators as showed below:</p>
+<h3 id="folder-name">Folder name</h3>
+<p>File in root folder</p>
+<pre><code class="language-python">&gt;&gt;&gt; generator = upload_to.UploadTo()
+&gt;&gt;&gt; generator(instance, &quot;file.pdf&quot;)
+&quot;file.pdf&quot;
+</code></pre>
+<p>Subfolders</p>
+<pre><code class="language-python">&gt;&gt;&gt; generator = upload_to.UploadTo(prefix=[&quot;files&quot;, &quot;documents&quot;])
+&gt;&gt;&gt; generator(instance, &quot;file.pdf&quot;)
+&quot;files/documents/file.pdf&quot;
+</code></pre>
+<p>Folder name from datetime</p>
+<pre><code class="language-python">&gt;&gt;&gt; generator = upload_to.UploadTo(prefix=[&quot;pictures&quot;, &quot;%Y&quot;])
+&gt;&gt;&gt; generator(instance, &quot;file.png&quot;)
+&quot;pictures/2023/file.png&quot;
+</code></pre>
+<p>Using the instance's attributes</p>
+<pre><code class="language-python">&gt;&gt;&gt; generator = upload_to.AttrUploadTo(attrs=[&quot;username&quot;])
+&gt;&gt;&gt; generator(instance, &quot;file.pdf&quot;)
+&quot;useremailcom/file.pdf&quot;
+</code></pre>
+<p>Using the app_label and the model_name</p>
+<pre><code class="language-python">&gt;&gt;&gt; generator = upload_to.ModelUploadTo()
+&gt;&gt;&gt; generator(instance, &quot;file.pdf&quot;)
+&quot;my_app/user/file.pdf&quot;
+</code></pre>
+<h3 id="file-name">File name</h3>
+<p>Using hexadecimal uuid value</p>
+<pre><code class="language-python"># 4. replace file name by a uuid value
+&gt;&gt;&gt; generator = upload_to.UuidUploadTo()
+&gt;&gt;&gt; generator(instance, &quot;file.pdf&quot;)
+&quot;b189dfdf25e640b2ba5c497472c20962.pdf&quot;
+</code></pre>
+<p>Normalize file name</p>
+<pre><code class="language-python">&gt;&gt;&gt; generator = upload_to.UploadTo()
+&gt;&gt;&gt; generator(instance, &quot;Á File_namE.pdf&quot;)
+&quot;a-file-name.pdf&quot;
+</code></pre>
+<h2 id="function-generator">Function generator</h2>
+<p>The function generator follows the Django's pattern using two arguments: instance and filename, and returns a str containing the path and file name.
+You must follow this pattern too.</p>
+<pre><code class="language-python"># my_app/models.py
+import upload_to
+from django.db import models
+
+
+def my_upload_generator(instance, filename):
+    filename = upload_to.uuid_filename(filename)
+    path = upload_to.options_from_instance(instance)
+    return upload_to.upload_to(path, filename)
+
+class MyProfile(models.Model):
+    user = models.OneToOneField(...)
+    avatar = models.FileField(upload_to=my_upload_generator)
+</code></pre>
+<h2 id="file-size-validation">File size validation</h2>
+<h3 id="limiting-maximum-file-size">Limiting maximum file size</h3>
+<p>Use <code>MaxSizeValidator</code> to ensure uploaded files don't exceed a certain size:</p>
+<pre><code class="language-python">from upload_to import UploadTo, MaxSizeValidator, MB
+from django.db import models
+
+
+class Document(models.Model):
+    file = models.FileField(
+        upload_to=UploadTo(&quot;documents&quot;),
+        validators=[MaxSizeValidator(1 * MB)]  # Max 1MB
+    )
+</code></pre>
+<h3 id="setting-minimum-file-size">Setting minimum file size</h3>
+<p>Use <code>MinSizeValidator</code> to ensure uploaded files meet a minimum size requirement:</p>
+<pre><code class="language-python">from upload_to import UploadTo, MinSizeValidator, KB
+from django.db import models
+
+
+class Image(models.Model):
+    photo = models.FileField(
+        upload_to=UploadTo(&quot;photos&quot;),
+        validators=[MinSizeValidator(5 * KB)]  # Min 5KB
+    )
+</code></pre>
+<h3 id="combining-size-validators">Combining size validators</h3>
+<p>You can use both validators together to define acceptable file size ranges:</p>
+<pre><code class="language-python">from upload_to import UploadTo, MaxSizeValidator, MinSizeValidator, KB, MB
+from django.db import models
+
+
+class Avatar(models.Model):
+    image = models.FileField(
+        upload_to=UploadTo(&quot;avatars&quot;),
+        validators=[
+            MinSizeValidator(1 * KB),   # Min 1KB
+            MaxSizeValidator(2 * MB),    # Max 2MB
+        ]
+    )
+</code></pre>
+<h3 id="using-callable-limit-values">Using callable limit values</h3>
+<p>Validators also support callable limit values for dynamic sizing:</p>
+<pre><code class="language-python">from upload_to import MaxSizeValidator, MB
+
+
+def get_max_size():
+    # Dynamic size based on user subscription level, etc.
+    return 5 * MB
+
+
+class UserFile(models.Model):
+    file = models.FileField(
+        validators=[MaxSizeValidator(get_max_size)]
+    )
+</code></pre>
+<h3 id="size-unit-constants">Size unit constants</h3>
+<p>The library provides convenient constants for common file sizes:</p>
+<ul>
+<li><code>KB</code> = 1,024 bytes (1 kilobyte)</li>
+<li><code>MB</code> = 1,048,576 bytes (1 megabyte)  </li>
+<li><code>GB</code> = 1,073,741,824 bytes (1 gigabyte)</li>
+<li><code>TB</code> = 1,099,511,627,776 bytes (1 terabyte)</li>
+<li><code>PB</code> = 1,125,899,906,842,624 bytes (1 petabyte)</li>
+</ul>
+<p>Example usage:</p>
+<pre><code class="language-python">from upload_to import MaxSizeValidator, KB, MB, GB
+
+# Different size limits
+validators=[MaxSizeValidator(500 * KB)]  # 500KB
+validators=[MaxSizeValidator(10 * MB)]   # 10MB
+validators=[MaxSizeValidator(2 * GB)]    # 2GB
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="django-upload-to"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
