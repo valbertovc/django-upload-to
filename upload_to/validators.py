@@ -1,5 +1,3 @@
-import mimetypes
-
 from django.core.exceptions import ValidationError
 from django.core.validators import BaseValidator
 from django.template.defaultfilters import filesizeformat
@@ -14,8 +12,6 @@ __all__ = [
     "TB",
     "PB",
 ]
-
-mimetypes.init()
 
 KB = 1 << 10
 MB = 1 << 20
