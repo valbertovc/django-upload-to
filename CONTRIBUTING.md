@@ -25,6 +25,7 @@ git clone https://github.com/<your-account>/django-upload-to.git
 ```bash
 cd django-upload-to
 poetry install
+poetry env activate
 ```
 5. Run the tests:
 ```bash
