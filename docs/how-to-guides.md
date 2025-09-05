@@ -102,3 +102,95 @@ class MyProfile(models.Model):
     user = models.OneToOneField(...)
     avatar = models.FileField(upload_to=my_upload_generator)
 ```
+
+## File size validation
+
+### Limiting maximum file size
+
+Use `MaxSizeValidator` to ensure uploaded files don't exceed a certain size:
+
+```python
+from upload_to import UploadTo, MaxSizeValidator, MB
+from django.db import models
+
+
+class Document(models.Model):
+    file = models.FileField(
+        upload_to=UploadTo("documents"),
+        validators=[MaxSizeValidator(1 * MB)]  # Max 1MB
+    )
+```
+
+### Setting minimum file size
+
+Use `MinSizeValidator` to ensure uploaded files meet a minimum size requirement:
+
+```python
+from upload_to import UploadTo, MinSizeValidator, KB
+from django.db import models
+
+
+class Image(models.Model):
+    photo = models.FileField(
+        upload_to=UploadTo("photos"),
+        validators=[MinSizeValidator(5 * KB)]  # Min 5KB
+    )
+```
+
+### Combining size validators
+
+You can use both validators together to define acceptable file size ranges:
+
+```python
+from upload_to import UploadTo, MaxSizeValidator, MinSizeValidator, KB, MB
+from django.db import models
+
+
+class Avatar(models.Model):
+    image = models.FileField(
+        upload_to=UploadTo("avatars"),
+        validators=[
+            MinSizeValidator(1 * KB),   # Min 1KB
+            MaxSizeValidator(2 * MB),    # Max 2MB
+        ]
+    )
+```
+
+### Using callable limit values
+
+Validators also support callable limit values for dynamic sizing:
+
+```python
+from upload_to import MaxSizeValidator, MB
+
+
+def get_max_size():
+    # Dynamic size based on user subscription level, etc.
+    return 5 * MB
+
+
+class UserFile(models.Model):
+    file = models.FileField(
+        validators=[MaxSizeValidator(get_max_size)]
+    )
+```
+
+### Size unit constants
+
+The library provides convenient constants for common file sizes:
+
+- `KB` = 1,024 bytes (1 kilobyte)
+- `MB` = 1,048,576 bytes (1 megabyte)  
+- `GB` = 1,073,741,824 bytes (1 gigabyte)
+- `TB` = 1,099,511,627,776 bytes (1 terabyte)
+- `PB` = 1,125,899,906,842,624 bytes (1 petabyte)
+
+Example usage:
+```python
+from upload_to import MaxSizeValidator, KB, MB, GB
+
+# Different size limits
+validators=[MaxSizeValidator(500 * KB)]  # 500KB
+validators=[MaxSizeValidator(10 * MB)]   # 10MB
+validators=[MaxSizeValidator(2 * GB)]    # 2GB
+```

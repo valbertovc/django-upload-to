@@ -108,6 +108,67 @@ class MyProfile(models.Model):
     avatar = models.FileField(upload_to=my_upload_generator)
 ```
 
+## File size validators
+
+The library also provides file size validators to restrict upload file sizes.
+
+### MaxSizeValidator
+Validates that the file size is less than the specified limit.
+
+```python
+# my_app/models.py
+from upload_to import UploadTo, MaxSizeValidator, MB
+from django.db import models
+
+
+class MyModel(models.Model):
+    attachment = models.FileField(
+        upload_to=UploadTo("attachments"),
+        validators=[MaxSizeValidator(5 * MB)]  # Max 5MB
+    )
+```
+
+### MinSizeValidator
+Validates that the file size is greater than the specified limit.
+
+```python
+# my_app/models.py
+from upload_to import UploadTo, MinSizeValidator, KB
+from django.db import models
+
+
+class MyModel(models.Model):
+    attachment = models.FileField(
+        upload_to=UploadTo("attachments"),
+        validators=[MinSizeValidator(1 * KB)]  # Min 1KB
+    )
+```
+
+### Using both validators together
+```python
+# my_app/models.py
+from upload_to import UploadTo, MaxSizeValidator, MinSizeValidator, KB, MB
+from django.db import models
+
+
+class MyModel(models.Model):
+    attachment = models.FileField(
+        upload_to=UploadTo("attachments"),
+        validators=[
+            MinSizeValidator(1 * KB),  # Min 1KB
+            MaxSizeValidator(5 * MB),   # Max 5MB
+        ]
+    )
+```
+
+### Available size units
+The library provides convenient size unit constants:
+- `KB` = 1,024 bytes
+- `MB` = 1,048,576 bytes
+- `GB` = 1,073,741,824 bytes
+- `TB` = 1,099,511,627,776 bytes
+- `PB` = 1,125,899,906,842,624 bytes
+
 ## Useful links
 
 1. [Documentation](https://valbertovc.github.io/django-upload-to/)

@@ -13,10 +13,7 @@ Django projects.
 
 ## Table of contents
 
-1. [Tutorials](tutorials.md)
-2. [How-To Guides](how-to-guides.md)
-3. [Reference](reference.md)
-4. [Explanation](explanation.md)
+1. [How-To Guides](how-to-guides.md)
 
 # Introduction
 
